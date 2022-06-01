@@ -1,0 +1,17 @@
+
+html, body, #root, #app, #app>div {
+    height: 100%
+}
+
+body {
+    margin: 0;
+    margin-top: 0.5em;
+}
+
+#root {
+    background-color: white;
+}
+
+html {
+    background-color: #2f4351;
+}
