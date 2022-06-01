@@ -18,9 +18,9 @@ function App() {
     <div>
       <div style={style.container}>
         <div style={style.links}>
-          <Link style={padding} to="/">Home</Link>
-          <Link style={padding} to="/tasks">Tasks</Link>
-          <Link style={padding} to="/about">About</Link> 
+          <Link style={style.link} to="/">Home</Link>
+          <Link style={style.link} to="/tasks">Tasks</Link>
+          <Link style={style.link} to="/about">About</Link> 
         </div>  
       </div>
 

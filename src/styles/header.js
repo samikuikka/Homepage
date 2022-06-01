@@ -11,11 +11,16 @@ const container = {
 
 const links = {
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "space-evenly"
+}
+
+const link =  {
+    color: theme.colors.text_primary
 }
 
 const style = {
     container,
     links,
+    link
 }
 export default style;

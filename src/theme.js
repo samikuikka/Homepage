@@ -9,6 +9,9 @@ const theme = {
         secondary_dark: '#918cae',
         text_primary: '#ffffff',
         test_secondary: '#000000'
+    },
+    fonts: {
+        main: "Roboto"
     }
 }
 
