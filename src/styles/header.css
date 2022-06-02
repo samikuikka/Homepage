@@ -31,3 +31,45 @@
 .navigation a:hover {
     background-color: #2f4351;
 }
+
+@media only screen and (max-width: 800px) {
+    #nav-left {
+        display: flex;
+        width: 60%;
+        justify-content: space-around;
+    }
+    #nav-right {
+        display: flex;
+        width: 40%;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .navigation {
+        justify-content: space-around;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+
+    .navigation {
+        flex-direction: column;
+        background-color: #2f4351;
+    }
+
+    #nav-left {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #nav-right {
+        flex-direction: column;
+        width: 100%
+    }
+
+    .navigation a {
+        text-align: center;
+        background-color: #5a6e7d;
+        margin-bottom: 0.5px;
+        margin-top: 0.5px;
+    }
+}

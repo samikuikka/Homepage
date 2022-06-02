@@ -10,10 +10,6 @@ import './styles/header.css'
 
 function App() {
 
-  const padding = {
-    padding: 5
-  }
-
   return (
     <div>
       <div className="navigation">
