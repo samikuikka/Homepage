@@ -6,7 +6,7 @@ import {
 import About from './routes/About';
 import Home from './routes/Home';
 import Tasks from './routes/Tasks';
-import style from './styles/header.js';
+import './styles/header.css'
 
 function App() {
 
@@ -16,12 +16,16 @@ function App() {
 
   return (
     <div>
-      <div style={style.container}>
-        <div style={style.links}>
-          <Link style={style.link} to="/">Home</Link>
-          <Link style={style.link} to="/tasks">Tasks</Link>
-          <Link style={style.link} to="/about">About</Link> 
-        </div>  
+      <div className="navigation">
+        <div id="nav-left">
+            <li><Link  to="/">Home</Link></li>
+            <li><Link  to="/tasks">Tasks</Link></li>
+            <li><Link  to="/about">About</Link></li>
+        </div>
+        <div id="nav-right">
+            <li><Link  to="/login">Login</Link></li>
+            <li><Link  to="/register">Register</Link></li>
+        </div>
       </div>
 
       <Routes>

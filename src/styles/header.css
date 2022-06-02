@@ -1,0 +1,33 @@
+
+.navigation {
+    display: flex;
+    justify-content: flex-start;
+    
+    margin: 0;
+    list-style: none;
+    background-color: #5a6e7d;
+}
+
+#nav-left {
+    display: flex;
+    width: 50%;
+}
+
+#nav-right {
+    display: flex;
+    width: 50%;
+    flex-direction: row-reverse;
+    
+}
+
+.navigation a {
+    text-decoration: none;
+    padding: 2em;
+    display: block;
+    
+    color: white;
+}
+
+.navigation a:hover {
+    background-color: #2f4351;
+}

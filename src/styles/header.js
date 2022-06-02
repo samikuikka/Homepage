@@ -5,22 +5,33 @@ import theme from "../theme";
 const container = {
     backgroundColor: theme.colors.primary,
     padding: "1em",
-    paddingLeft: "3em",
-    paddingRight: "3em"
 }
 
 const links = {
     display: "flex",
-    justifyContent: "space-evenly"
+    flexFlow: "row wrap"
+}
+
+const leftHeader = {
+    display: "flex",
+    justifyContent: "flex-start",
+}
+
+const rightHeader = {
+    display: "flex",
+    justifyContent: "flex-end",
 }
 
 const link =  {
-    color: theme.colors.text_primary
+    color: theme.colors.text_primary,
+    paddingRight: "3em",
 }
 
 const style = {
     container,
     links,
-    link
+    link,
+    leftHeader,
+    rightHeader
 }
 export default style;
