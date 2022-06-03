@@ -1,18 +1,21 @@
 
-const theme = {
-    colors: {
-        primary: '#5a6e7d',
-        primary_light: '#889cac',
-        primary_dark: '#2f4351',
-        secondary: '#c2bce0',
-        secondary_light: "#f5eeff",
-        secondary_dark: '#918cae',
-        text_primary: '#ffffff',
-        test_secondary: '#000000'
+import { createTheme } from '@mui/material/styles';
+
+let theme = createTheme({
+  palette: {
+    primary: {
+      main: '#546e7a',
+      light: '#819ca9',
+      dark: '#29434e',
+      contrastText: '#ffffff'
     },
-    fonts: {
-        main: "Roboto"
-    }
-}
+    secondary: {
+      main: '#b388ff',
+      light: '#e7b9ff',
+      dark: '#805acb',
+      contrastText: '#000000'
+    },
+  },
+});
 
 export default theme;

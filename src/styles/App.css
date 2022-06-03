@@ -1,11 +1,9 @@
-
-html, body, #root, #app, #app>div {
+ html, body, #root, #app, #app>div {
     height: 100%
 }
 
 body {
     margin: 0;
-    margin-top: 0.5em;
 }
 
 #root {
@@ -13,10 +11,9 @@ body {
 }
 
 html {
-    background-color: #2f4351;
     font-family: Roboto;
 }
 
 a {
     text-decoration: none;
-}
+} 

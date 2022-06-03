@@ -6,34 +6,29 @@ import {
 import About from './routes/About';
 import Home from './routes/Home';
 import Tasks from './routes/Tasks';
-import './styles/header.css'
+import Login from './routes/Login';
+import { Container } from '@mui/material'
+import Header from './components/Header';
+import theme from './theme'
+import { ThemeProvider } from '@mui/material/styles';
+
 
 function App() {
 
   return (
-    <div>
-      <div className="navigation">
-        <div id="nav-left">
-            <li><Link  to="/">Home</Link></li>
-            <li><Link  to="/tasks">Tasks</Link></li>
-            <li><Link  to="/about">About</Link></li>
-        </div>
-        <div id="nav-right">
-            <li><Link  to="/login">Login</Link></li>
-            <li><Link  to="/register">Register</Link></li>
-        </div>
-      </div>
-
-      <Routes>
-        <Route path="/about" element={<About/>} />
-        <Route path="/tasks" element={<Tasks />} />
-        <Route path="/" element={<Home />} />
-      </Routes>
-
-      <div className="footer">
-        "Footer text"
-      </div>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Container  disableGutters maxWidth='false' >
+        <Header />
+   
+        <Routes>
+          <Route path="/about" element={<About/>} />
+          <Route path="/tasks" element={<Tasks />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+        </Routes>
+   
+    </Container>
+    </ThemeProvider>
   );
 }
 

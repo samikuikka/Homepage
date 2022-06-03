@@ -1,4 +1,14 @@
 
+.container {
+    height: 100%;
+    display:flex;
+    flex-flow: column;
+}
+
+.content {
+    flex: 1;
+}
+
 .navigation {
     display: flex;
     justify-content: flex-start;
