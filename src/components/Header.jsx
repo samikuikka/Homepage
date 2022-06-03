@@ -36,11 +36,10 @@ const Header = () => {
       //changes the function state according to the value of open
       setOpen(open);
   };
-  console.log(open);
 
 
     return(
-      <Box sx={{ flexGrow: 1}}>
+      <Box sx={{ flexGrow: 0}}>
           <AppBar position="static">
               <Toolbar>
                     <IconButton
@@ -93,7 +92,7 @@ const Header = () => {
                                     <ListItemIcon>
                                         <GroupAddIcon />
                                     </ListItemIcon>
-                                    <ListItemText primary="register" />
+                                    <ListItemText primary="Register" />
                                 </ListItemButton> 
                             </List> 
                         </Box>         
@@ -103,16 +102,5 @@ const Header = () => {
       </Box>  
     );
 }
-/* <div>
-            <div id="nav-left">
-            <li><Link  to="/">Home</Link></li>
-            <li><Link  to="/tasks">Tasks</Link></li>
-            <li><Link  to="/about">About</Link></li>
-            </div>
-            <div id="nav-right">
-            <li><Link  to="/login">Login</Link></li>
-            <li><Link  to="/register">Register</Link></li>
-            </div>
-        </div> */
 
 export default Header;
