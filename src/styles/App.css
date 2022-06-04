@@ -2,16 +2,17 @@
     height: 100%
 }
 
+html {
+    min-width: max-content;
+    font-family: Roboto;
+}
+
 body {
     margin: 0;
 }
 
 #root {
     background-color: white;
-}
-
-html {
-    font-family: Roboto;
 }
 
 a {

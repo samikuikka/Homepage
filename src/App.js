@@ -25,7 +25,7 @@ function App() {
          }}>
         <Header />
 
-        <Box sx={{ flexGrow: '1'}}>
+        <Box sx={{ flexGrow: '1', width: '100%'}}>
           <Routes>
             <Route path="/about" element={<About/>} />
             <Route path="/tasks" element={<Tasks />} />
