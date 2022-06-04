@@ -12,6 +12,7 @@ import Header from './components/Header';
 import theme from './theme'
 import { ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import Register from './routes/Register';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route path="/about" element={<About/>} />
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register/>} />
             <Route path="/" element={<Home />} />
           </Routes>
         </Box>

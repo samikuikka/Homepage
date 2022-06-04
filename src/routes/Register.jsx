@@ -5,9 +5,8 @@ import * as yup from 'yup';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import styles from '../styles/login.module.css';
+import styles from '../styles/register.module.css';
 
 const validationSchema = yup.object({
     username: yup
@@ -16,26 +15,31 @@ const validationSchema = yup.object({
     password: yup
         .string('Enter your password')
         .required('Password is required'),
+    passwordConfirmation: yup
+        .string('Enter your password')
+        .oneOf([yup.ref('password'), null], 'Passwords must match')
+        .required('Repeat the password'),
 });
 
-const Login = () => {
+const Register = () => {
 
     const formik = useFormik({
         initialValues: {
             username: '',
-            password: ''
+            password: '',
+            passwordConfirmation: ''
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2))
+            alert(JSON.stringify(values, null, 2));
         }
     })
 
-    return(
+    return (
         <Paper elevation={10} className={styles.paper} >
             <form onSubmit={formik.handleSubmit} >
                 <Typography variant="h3" component="div" className={styles.login_text}>
-                    Welcome
+                    Register
                 </Typography>
 
                 <TextField
@@ -61,13 +65,24 @@ const Login = () => {
                     className={styles.textField}
                     fullWidth
                 />
+                <TextField
+                    id="passwordConfirmation"
+                    name="passwordConfirmation"
+                    label="Password confirmation"
+                    type="password"
+                    value={formik.values.passwordConfirmation}
+                    onChange={formik.handleChange}
+                    error={formik.touched.passwordConfirmation && Boolean(formik.errors.passwordConfirmation)}
+                    helperText={formik.touched.passwordConfirmation ? formik.errors.passwordConfirmation ? formik.errors.passwordConfirmation : ' ' : 'Please enter your password again'}
+                    className={styles.textField}
+                    fullWidth
+                />
                 <Button color="secondary" variant="contained" type="submit" className={styles.submit_button} fullWidth>
-                    Log In
+                    Register
                 </Button>
             </form>
         </Paper>
-    
-    )
+    );
 }
 
-export default Login;
+export default Register;
