@@ -1,21 +1,38 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Routes, Route, Link
 } from "react-router-dom"
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from './reducers/userReducer';
+
 import About from './routes/About';
 import Home from './routes/Home';
 import Tasks from './routes/Tasks';
 import Login from './routes/Login';
-import { Container } from '@mui/material'
 import Header from './components/Header';
-import theme from './theme'
-import { ThemeProvider } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import Register from './routes/Register';
 
 
+import { Container } from '@mui/material'
+import theme from './theme'
+import { ThemeProvider } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+
+
 function App() {
+
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch()
+
+  // Automatically log in if user still in local storage
+  useEffect( () => {
+    const loggedUser = window.localStorage.getItem('user');
+    if(user) {
+      const user = JSON.parse(loggedUser);
+      dispatch(login(user));
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

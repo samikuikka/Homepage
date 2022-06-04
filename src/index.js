@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { StyledEngineProvider } from '@mui/material/styles';
+import store from './store'
+import { Provider } from 'react-redux'
 import './styles/App.css'
 
 const root = ReactDOM.createRoot(
@@ -10,8 +12,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <StyledEngineProvider injectFirst>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   </StyledEngineProvider>
 );

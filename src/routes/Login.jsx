@@ -5,9 +5,11 @@ import * as yup from 'yup';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import styles from '../styles/login.module.css';
+import { useDispatch } from 'react-redux';
+import { login } from '../reducers/userReducer';
+import loginService from '../services/login';
 
 const validationSchema = yup.object({
     username: yup
@@ -20,16 +22,29 @@ const validationSchema = yup.object({
 
 const Login = () => {
 
+    const dispatch = useDispatch()
+
+    const handleLogin = async (values) => {
+
+        try {
+            const user = await loginService.login(values);
+            window.localStorage.setItem('user', JSON.stringify(user));
+            dispatch(login(values));
+        } catch (error) {
+            console.log('error: ', error);
+        }
+    }
+
     const formik = useFormik({
         initialValues: {
             username: '',
             password: ''
         },
         validationSchema: validationSchema,
-        onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2))
+        onSubmit: values => {
+            handleLogin(values);
         }
-    })
+    });
 
     return(
         <Paper elevation={10} className={styles.paper} >
