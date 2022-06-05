@@ -12,6 +12,7 @@ import Tasks from './routes/Tasks';
 import Login from './routes/Login';
 import Header from './components/Header';
 import Register from './routes/Register';
+import Notification from './components/Notification';
 
 
 import { Container } from '@mui/material'
@@ -52,6 +53,8 @@ function App() {
             <Route path="/" element={<Home />} />
           </Routes>
         </Box>
+
+        <Notification />
    
     </Container>
     </ThemeProvider>

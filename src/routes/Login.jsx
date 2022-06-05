@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
@@ -6,9 +6,11 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
+
 import styles from '../styles/login.module.css';
 import { useDispatch } from 'react-redux';
 import { login } from '../reducers/userReducer';
+import { setNotification } from '../reducers/notificationReducer';
 import loginService from '../services/login';
 
 const validationSchema = yup.object({
@@ -24,6 +26,7 @@ const Login = () => {
 
     const dispatch = useDispatch()
 
+
     const handleLogin = async (values) => {
 
         try {
@@ -31,7 +34,14 @@ const Login = () => {
             window.localStorage.setItem('user', JSON.stringify(user));
             dispatch(login(values));
         } catch (error) {
-            console.log('error: ', error);
+            console.log(error);
+            let errorMessage = {
+                severity: 'error',
+                message: "Something went wrong"
+            }
+            if(error.response.data.error) errorMessage.message = error.response.data.error;
+            console.log(errorMessage);
+            dispatch(setNotification(errorMessage));
         }
     }
 
