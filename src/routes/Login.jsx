@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useNavigate } from 'react-router';
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -25,7 +26,7 @@ const validationSchema = yup.object({
 const Login = () => {
 
     const dispatch = useDispatch()
-
+    let navigate = useNavigate();
 
     const handleLogin = async (values) => {
 
@@ -33,14 +34,18 @@ const Login = () => {
             const user = await loginService.login(values);
             window.localStorage.setItem('user', JSON.stringify(user));
             dispatch(login(values));
+            let successMessage = {
+                severity: 'success',
+                message: 'Login succesful'
+            }
+            dispatch(setNotification(successMessage));
+            navigate('../', { replace: true });
         } catch (error) {
-            console.log(error);
             let errorMessage = {
                 severity: 'error',
                 message: "Something went wrong"
             }
             if(error.response.data.error) errorMessage.message = error.response.data.error;
-            console.log(errorMessage);
             dispatch(setNotification(errorMessage));
         }
     }

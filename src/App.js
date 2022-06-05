@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import {
   BrowserRouter as Router,
-  Routes, Route, Link
+  Routes, Route, Navigate
 } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from './reducers/userReducer';
@@ -13,6 +13,7 @@ import Login from './routes/Login';
 import Header from './components/Header';
 import Register from './routes/Register';
 import Notification from './components/Notification';
+import RequireAuth from './components/RequireAuth';
 
 
 import { Container } from '@mui/material'
@@ -27,9 +28,9 @@ function App() {
   const dispatch = useDispatch()
 
   // Automatically log in if user still in local storage
-  useEffect( () => {
+  useEffect(() => {
     const loggedUser = window.localStorage.getItem('user');
-    if(user) {
+    if (user) {
       const user = JSON.parse(loggedUser);
       dispatch(login(user));
     }
@@ -37,26 +38,36 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container  disableGutters maxWidth='false' sx={{
-         display: 'flex',
-         flexDirection: 'column',
-         height: '1'
-         }}>
+      <Container disableGutters maxWidth='false' sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '1'
+      }}>
         <Header />
 
-        <Box sx={{ flexGrow: '1', width: '100%'}}>
+        <Box sx={{ flexGrow: '1', width: '100%' }}>
           <Routes>
-            <Route path="/about" element={<About/>} />
-            <Route path="/tasks" element={<Tasks />} />
+            <Route path="/about" element={
+              <RequireAuth>
+                <About />
+              </RequireAuth>
+            }
+            />
+            <Route path="/tasks" element={
+              <RequireAuth>
+                <Tasks />
+              </RequireAuth>
+            }
+            />
             <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register/>} />
+            <Route path="/register" element={<Register />} />
             <Route path="/" element={<Home />} />
           </Routes>
         </Box>
 
         <Notification />
-   
-    </Container>
+
+      </Container>
     </ThemeProvider>
   );
 }
