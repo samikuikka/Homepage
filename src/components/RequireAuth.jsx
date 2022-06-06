@@ -7,7 +7,6 @@ const RequireAuth = ( { children } ) => {
     let auth = useSelector(state => state.user);
     let location = useLocation();
     if(!auth.user) {
-        console.log('got here');
         return <Navigate to="/login" state={{ from: location}} replace />
     }
 

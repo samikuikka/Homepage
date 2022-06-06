@@ -1,12 +1,18 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import registerService from '../services/register';
+import { useDispatch } from 'react-redux';
+import { login } from '../reducers/userReducer';
+import { setNotification } from '../reducers/notificationReducer';
+import { useNavigate } from 'react-router';
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import styles from '../styles/register.module.css';
+
 
 const validationSchema = yup.object({
     username: yup
@@ -23,6 +29,9 @@ const validationSchema = yup.object({
 
 const Register = () => {
 
+    let dispatch = useDispatch();
+    let navigate = useNavigate();
+
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -30,8 +39,20 @@ const Register = () => {
             passwordConfirmation: ''
         },
         validationSchema: validationSchema,
-        onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2));
+        onSubmit: async (values) => {
+            
+            try {
+                const credentials = {
+                    username: values.username,
+                    password: values.password
+                }
+                await registerService.register(credentials);
+                dispatch(login(credentials));
+                dispatch(setNotification({ severity: 'success', message: 'New user created'}));
+                navigate('../', { replace: true});
+            } catch (error) {
+                dispatch(setNotification({ severity: 'error', message: 'Something went wrong'}));
+            }
         }
     })
 
