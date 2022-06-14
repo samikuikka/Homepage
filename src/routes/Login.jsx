@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -27,6 +27,10 @@ const Login = () => {
 
     const dispatch = useDispatch()
     let navigate = useNavigate();
+    let location = useLocation();
+
+    let from = location.state?.from?.pathname || '/';
+
 
     const handleLogin = async (values) => {
 
@@ -39,7 +43,7 @@ const Login = () => {
                 message: 'Login succesful'
             }
             dispatch(setNotification(successMessage));
-            navigate('../', { replace: true });
+            navigate(from, { replace: true });
         } catch (error) {
             let errorMessage = {
                 severity: 'error',
