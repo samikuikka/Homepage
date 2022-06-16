@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { login } from '../reducers/userReducer';
 import { setNotification } from '../reducers/notificationReducer';
 import loginService from '../services/login';
+import projectServices from '../services/projects';
 
 const validationSchema = yup.object({
     username: yup
@@ -42,7 +43,9 @@ const Login = () => {
                 severity: 'success',
                 message: 'Login succesful'
             }
+
             dispatch(setNotification(successMessage));
+            projectServices.setToken(user.token);
             navigate(from, { replace: true });
         } catch (error) {
             let errorMessage = {

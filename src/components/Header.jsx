@@ -13,6 +13,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import List from '@mui/material/List';
+import TocIcon from '@mui/icons-material/Toc';
 
 //Icons
 import LoginIcon from '@mui/icons-material/Login';
@@ -20,6 +21,7 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import HomeIcon from '@mui/icons-material/Home';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import InfoIcon from '@mui/icons-material/Info';
+import { ListItem } from '@mui/material';
 
 
 
@@ -74,12 +76,19 @@ const Header = () => {
                                     </ListItemIcon>
                                     <ListItemText primary="Tasks"/>
                                 </ListItemButton>
+                                <ListItemButton component={Link} to="/projects">
+                                    <ListItemIcon>
+                                        <TocIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Projects" />
+                                </ListItemButton>
                                 <ListItemButton component={Link} to="/about">
                                     <ListItemIcon>
                                         <InfoIcon />
                                     </ListItemIcon>
                                     <ListItemText primary="About"/>
                                 </ListItemButton>
+
 
                                 <Divider />
 

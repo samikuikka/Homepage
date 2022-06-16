@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, Navigate } from 'react-router';
 import { login } from '../reducers/userReducer';
+import projectServices from '../services/projects';
 
 
 const RequireAuth = ( { children } ) => {
@@ -16,6 +17,7 @@ const RequireAuth = ( { children } ) => {
     if (!user.user) {
       const user = JSON.parse(loggedUser);
       dispatch(login(user));
+      projectServices.setToken(user.token);
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

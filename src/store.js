@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userReducer from './reducers/userReducer'
 import notificationReducer from './reducers/notificationReducer'
+import projectReducer from './reducers/projectReducer'
 
 export default configureStore({
   reducer: {
       user: userReducer,
-      notification: notificationReducer
+      notification: notificationReducer,
+      projects: projectReducer
   }
 })
