@@ -16,9 +16,21 @@ const initializeNotes = async () => {
     return request.data;
 }
 
+const update = async (id, data) => {
+    const config = {
+        headers: { Authorization: token}
+    }
+
+    const request = await axios.put(`${baseURL}/${id}`, data, config)
+    return request.data;
+}
+
+
+
 const projectServices = {
     setToken,
     initializeNotes,
+    update,
 }
 
 export default projectServices;
