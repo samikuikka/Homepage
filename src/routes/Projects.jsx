@@ -4,7 +4,19 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../reducers/notificationReducer';
 
 import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarColumnsButton,
+  GridToolbarFilterButton,
+  GridToolbarExport,
+  GridToolbarDensitySelector,
+  GridToolbarQuickFilter
+} from '@mui/x-data-grid';
+import Button from '@mui/material/Button';
+import ProjectDialog from '../components/ProjectDialog';
+
+
 
 const useFakeMutation = () => {
     return useCallback( (row) => {
@@ -21,24 +33,53 @@ const useFakeMutation = () => {
     }, [])
 }
 
+const CustomToolbar = ({setOpen}) => {
+
+    return(
+        <GridToolbarContainer>
+            <Box sx={{flex: 1}}>
+                <GridToolbarColumnsButton />
+                <GridToolbarFilterButton />
+                <GridToolbarDensitySelector />
+                <GridToolbarExport />
+            </Box>
+            <Button
+                variant="contained"
+                color="secondary"
+                sx={{ marginRight: 2.5}}
+                onClick={() => setOpen(true)}
+            >
+                    ADD
+            </Button>
+            <GridToolbarQuickFilter />
+        </GridToolbarContainer>
+    );
+}
+
+const columns = [
+    { field: '_id', headerName: 'ID', flex: 1 , sortable: false},
+    { field: 'name', headerName: 'Project name', flex: 1, editable: true},
+    { field: 'tasks', headerName: 'Tasks', flex: 1 },
+    { field: 'createdAt', headerName: 'Creation date', flex:1},
+    { field: 'lastReview', headerName: 'Last Review', flex: 1},
+    { field: 'reviewFreq', headerName: 'Review Freq', flex: 1, editable: true},
+    { field: 'overdue', headerName: 'Overdue', flex: 1}
+];
+
 
 const Projects = () => {
     const dispatch = useDispatch();
     const mutatedRow = useFakeMutation();
     const [projects, setProjects] = useState([]);
+    const [open, setOpen] = useState(false);
 
-    const columns = [
-        { field: '_id', headerName: 'ID', flex: 1 },
-        { field: 'name', headerName: 'Project name', flex: 1, editable: true},
-        { field: 'tasks', headerName: 'Tasks', flex: 1 },
-        { field: 'createdAt', headerName: 'Creation date', flex:1},
-        { field: 'lastReview', headerName: 'Last Review', flex: 1},
-        { field: 'reviewFreq', headerName: 'Review Freq', flex: 1, editable: true},
-        { field: 'overdue', headerName: 'Overdue', flex: 1}
-    ];
+    //Close dialog
+    const handleClose = () => {
+        setOpen(false);
+    }
 
+    // Update row
    const processRowUpdate = useCallback( async (newRow) => {
-
        const response = await mutatedRow(newRow)
        const res = await projectServices.update(response._id, response);
        let successMessage = {
@@ -51,6 +92,7 @@ const Projects = () => {
    // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [mutatedRow])
 
+    // Show error in row editing
    const onProcessRowUpdateError = useCallback( (error) => {
        let errorMessage = {
            severity: 'error',
@@ -60,7 +102,7 @@ const Projects = () => {
    // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
    
-
+   //Get Projects
     useEffect(() => {
         projectServices.initializeNotes().then(projects => 
              setProjects(projects)
@@ -76,7 +118,12 @@ const Projects = () => {
                 experimentalFeatures={{ newEditingApi: true}}
                 processRowUpdate={processRowUpdate}
                 onProcessRowUpdateError={onProcessRowUpdateError}
+                components={{ Toolbar: CustomToolbar }}
+                componentsProps={{ toolbar: { setOpen: setOpen } }}
+                
             />
+            <ProjectDialog open={open} handleClose={handleClose} />
+            
         </Box>
     );
 }

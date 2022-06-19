@@ -1,0 +1,17 @@
+
+.inputField  {
+    display: block;
+    margin-bottom: 30px;
+}
+
+.submit_button {
+    display: block;
+}
+
+.form_container {
+    width: 360px;
+    height: 200px;
+    padding: 50px 35px;
+    
+    
+}
