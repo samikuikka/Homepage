@@ -2,6 +2,8 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import projectServices from '../services/projects';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../reducers/notificationReducer';
 
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -19,11 +21,22 @@ const validationSchema = yup.object({
 });
 
 
-const ProjectDialog = ({open, handleClose}) => {
+const ProjectDialog = ({open, handleClose, setProjects}) => {
+
+     let dispatch = useDispatch();
 
     const createProject = async (values) => {
-        const response = await projectServices.create(values);
-        console.log(response)
+        await projectServices.create(values);
+        let successMessage = {
+            severity: "success",
+            message: 'A new project created'
+        }
+        console.log(setProjects);
+        projectServices.initializeNotes().then(projects => {
+            setProjects(projects);
+        });
+        dispatch(setNotification(successMessage));
+        handleClose();
     }
     
     const formik = useFormik({

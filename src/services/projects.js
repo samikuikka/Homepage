@@ -34,6 +34,15 @@ const create = async (data) => {
     return request.data;
 }
 
+const remove = async (id) => {
+    const config = {
+        headers: { Authorization: token }
+    }
+
+    const request = await axios.delete(`${baseURL}/${id}`, config);
+    return request.data;
+}
+
 
 
 const projectServices = {
@@ -41,6 +50,7 @@ const projectServices = {
     initializeNotes,
     update,
     create,
+    remove,
 }
 
 export default projectServices;

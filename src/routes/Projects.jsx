@@ -33,7 +33,7 @@ const useFakeMutation = () => {
     }, [])
 }
 
-const CustomToolbar = ({setOpen}) => {
+const CustomToolbar = ({setOpen, deleteRows}) => {
 
     return(
         <GridToolbarContainer>
@@ -43,6 +43,14 @@ const CustomToolbar = ({setOpen}) => {
                 <GridToolbarDensitySelector />
                 <GridToolbarExport />
             </Box>
+            <Button
+                variant="contained"
+                color="error"
+                sx={{marginRight: 2.5}}
+                onClick={deleteRows}
+            >
+                Delete
+            </Button>
             <Button
                 variant="contained"
                 color="secondary"
@@ -72,6 +80,22 @@ const Projects = () => {
     const mutatedRow = useFakeMutation();
     const [projects, setProjects] = useState([]);
     const [open, setOpen] = useState(false);
+    const [selectedRows, setSelectedRows] = useState([]);
+
+    //Delete selected rows
+    const deleteRows = async () => {
+       for( const id of selectedRows) {
+           await projectServices.remove(id);
+       }
+       let successMessage = {
+           severity: 'success',
+           message: "Project('s) deleted"
+       }
+       projectServices.initializeNotes().then(projects => 
+        setProjects(projects)
+       )
+       dispatch(setNotification(successMessage));
+    }
 
     //Close dialog
     const handleClose = () => {
@@ -108,7 +132,8 @@ const Projects = () => {
              setProjects(projects)
             )
     }, [])
-    
+
+
     return(
         <Box sx={{ flexGrow: 1, height: '100%'}}>
             <DataGrid 
@@ -119,10 +144,13 @@ const Projects = () => {
                 processRowUpdate={processRowUpdate}
                 onProcessRowUpdateError={onProcessRowUpdateError}
                 components={{ Toolbar: CustomToolbar }}
-                componentsProps={{ toolbar: { setOpen: setOpen } }}
-                
+                componentsProps={{ toolbar: { setOpen: setOpen, deleteRows: deleteRows } }}
+                checkboxSelection
+                onSelectionModelChange={(ids) => {
+                    setSelectedRows(ids);
+                }}
             />
-            <ProjectDialog open={open} handleClose={handleClose} />
+            <ProjectDialog open={open} handleClose={handleClose} setProjects={setProjects} />
             
         </Box>
     );
