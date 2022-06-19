@@ -25,12 +25,22 @@ const update = async (id, data) => {
     return request.data;
 }
 
+const create = async (data) => {
+    const config = {
+        headers: { Authorization: token}
+    }
+    
+    const request = await axios.post(baseURL, data, config);
+    return request.data;
+}
+
 
 
 const projectServices = {
     setToken,
     initializeNotes,
     update,
+    create,
 }
 
 export default projectServices;
