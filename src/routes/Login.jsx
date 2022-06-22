@@ -14,6 +14,7 @@ import { login } from '../reducers/userReducer';
 import { setNotification } from '../reducers/notificationReducer';
 import loginService from '../services/login';
 import projectServices from '../services/projects';
+import tasksServices from '../services/tasks';
 
 const validationSchema = yup.object({
     username: yup
@@ -46,6 +47,7 @@ const Login = () => {
 
             dispatch(setNotification(successMessage));
             projectServices.setToken(user.token);
+            tasksServices.setToken(user.token);
             navigate(from, { replace: true });
         } catch (error) {
             let errorMessage = {
