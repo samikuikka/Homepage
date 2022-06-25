@@ -10,6 +10,15 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import IconButton from '@mui/material/IconButton';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TableEditBody from './TableEditBody';
+import { TableBody } from '@mui/material';
+
+
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -22,13 +31,16 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
+
 const Task = ({ task }) => {
     const [expanded, setExpanded] = useState(false);
 
+
     const handleExpandClick = () => {
         setExpanded(!expanded);
-      };
-      console.log(task)
+    };
+
+    
     return (
         <Grid
             item
@@ -56,9 +68,26 @@ const Task = ({ task }) => {
                 <div className={styles.content_expanded}>
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
                         <Divider />
-                        <Typography>
-                            sadjas
-                        </Typography>
+                        <TableContainer 
+                            component={Paper}
+                            sx={{
+                                border: '1px solid rgba(0,0,0,0.1)'
+                            }}
+                        >
+                            <Table sx={{ minWidth: 650}} aria-label="task table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell width="19%">name</TableCell>
+                                        <TableCell width="19%">project</TableCell>
+                                        <TableCell width="19%">done</TableCell>
+                                        <TableCell width="19">high priority</TableCell>
+                                        <TableCell width="19%">duration</TableCell>
+                                        <TableCell width="5%"></TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableEditBody task={task} />
+                            </Table>
+                        </TableContainer>
                     </Collapse>
                 </div>
             </Paper>
