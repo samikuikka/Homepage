@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import styles from '../styles/tasks.module.css';
 import { styled } from '@mui/material/styles';
+import { Formik, Form } from 'formik';
+import * as yup from 'yup';
+
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -16,7 +19,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableEditBody from './TableEditBody';
-import { TableBody } from '@mui/material';
 
 
 
@@ -31,9 +33,21 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
+const validationSchema = yup.object({
+    name: yup.string('Task name must be string.')
+        .required('Name must be provided.'),
+});
+
 
 const Task = ({ task }) => {
     const [expanded, setExpanded] = useState(false);
+    
+    const initialState = {
+        name: task.name,
+        duration: task.duration,
+        done: task.done,
+        hiPriority: task.hiPriority
+    };
 
 
     const handleExpandClick = () => {
@@ -68,26 +82,37 @@ const Task = ({ task }) => {
                 <div className={styles.content_expanded}>
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
                         <Divider />
-                        <TableContainer 
-                            component={Paper}
-                            sx={{
-                                border: '1px solid rgba(0,0,0,0.1)'
+                        <Formik 
+                            initialValues={initialState}
+                            validationSchema={validationSchema}
+                            onSubmit={ values => {
+                                console.log(values);
                             }}
-                        >
-                            <Table sx={{ minWidth: 650}} aria-label="task table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell width="19%">name</TableCell>
-                                        <TableCell width="19%">project</TableCell>
-                                        <TableCell width="19%">done</TableCell>
-                                        <TableCell width="19">high priority</TableCell>
-                                        <TableCell width="19%">duration</TableCell>
-                                        <TableCell width="5%"></TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableEditBody task={task} />
-                            </Table>
-                        </TableContainer>
+                            >
+                            <Form>
+                                <TableContainer 
+                                    component={Paper}
+                                    sx={{
+                                        border: '1px solid rgba(0,0,0,0.1)'
+                                    }}
+                                >
+                                    <Table sx={{ minWidth: 650 }} aria-label="task table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell width="19%">name</TableCell>
+                                                <TableCell width="19%">project</TableCell>
+                                                <TableCell width="19%">done</TableCell>
+                                                <TableCell width="19">high priority</TableCell>
+                                                <TableCell width="19%">duration</TableCell>
+                                                <TableCell width="5%"></TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableEditBody task={task}/>
+                                    </Table>
+
+                                </TableContainer>
+                            </Form>
+                        </Formik>
                     </Collapse>
                 </div>
             </Paper>

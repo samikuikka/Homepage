@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
+import { useField } from 'formik';
 
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-import TableFooter from '@mui/material/TableFooter';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
+import Checkbox from '@mui/material/Checkbox';
+import SubmitIconButton from './FormsUI/SubmitIconButton';
 
-const EditCell = ({edit, children, label}) => {
+const EditCell = ({edit, children, name, ...otherProps}) => {
+    const [field, meta] = useField(name);
+
+    const config = {
+        ...field,
+        ...otherProps,
+        fullWidth: true,
+    }
 
     if(edit) {
         return (
             <TableCell>
                 <TextField
-                    fullWidth
-                    label={label}
-                    defaultValue={children}
+                    {...config}
                 >
 
                 </TextField>
@@ -27,6 +34,34 @@ const EditCell = ({edit, children, label}) => {
     return(
         <TableCell>{children}</TableCell>
     );
+}
+
+const CheckboxCell = ({edit, value}) => {
+    const [checked, setChecked] = useState(value)
+
+    const handleChange = (event) => {
+        setChecked(event.target.checked);
+    }
+
+    if(edit) {
+        return (
+            <td>
+                <Checkbox 
+                    checked={checked}
+                    onChange={handleChange} 
+                    />
+            </td>
+        )
+    }
+
+    return (
+        <td>
+            <Checkbox 
+            checked={value}
+            disabled 
+             />
+        </td>
+    )
 }
 
 const TableEditBody = ({task}) => {
@@ -40,30 +75,39 @@ const TableEditBody = ({task}) => {
         setEdit(false);
     }
 
+
     return (
         <TableBody>
             <TableRow>
-                <EditCell 
-                    edit={edit}
-                    label="name"
-                >
-                    {task.name}
-                </EditCell>
-                <TableCell>{task.project.name}</TableCell>
-                <TableCell>{task.done.toString()}</TableCell>
-                <TableCell>{task.hiPriority.toString()}</TableCell>
-                <EditCell edit={edit}>{task.duration}</EditCell>
-                <TableCell>
-                    {edit ? (
-                        <IconButton onClick={closeEdit}>
-                            <CheckIcon color="primary" />
-                        </IconButton>
-                    ) : (
-                        <IconButton onClick={handleEdit}>
-                            <EditIcon color="green" />
-                        </IconButton>
-                    )}
-                </TableCell>
+                    <EditCell
+                        edit={edit}
+                        label="name"
+                        name="name"
+                    >
+                        {task.name}
+                    </EditCell>
+                    <TableCell>{task.project.name}</TableCell>
+                    <CheckboxCell edit={edit} value={task.done} />
+                    <CheckboxCell edit={edit} value={task.hiPriority} />
+                    <EditCell
+                        edit={edit}
+                        label="duration"
+                        name="duration"
+                        type="number"
+                    >
+                        {task.duration}
+                    </EditCell>
+                    <TableCell>
+                        {edit ? (
+                            <SubmitIconButton onClick={closeEdit}>
+                                <CheckIcon color="primary" />
+                            </SubmitIconButton>
+                        ) : (
+                            <IconButton onClick={handleEdit}>
+                                <EditIcon color="green" />
+                            </IconButton>
+                        )}
+                    </TableCell>
             </TableRow>
         </TableBody>
     )
