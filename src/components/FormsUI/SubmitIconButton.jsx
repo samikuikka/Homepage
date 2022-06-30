@@ -4,12 +4,14 @@ import { useFormikContext } from 'formik';
 
 const IconButtonWrapper = ({
     children,
+    close,
     ...otherProps
 }) => {
     const { submitForm } = useFormikContext();
 
     const handleSubmit = () => {
         submitForm();
+        close();
     }
 
     const config = {

@@ -3,6 +3,7 @@ import styles from '../styles/tasks.module.css';
 import { styled } from '@mui/material/styles';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
+import tasksServices from '../services/tasks'
 
 
 import Grid from '@mui/material/Grid';
@@ -49,6 +50,11 @@ const Task = ({ task }) => {
         hiPriority: task.hiPriority
     };
 
+    const handleSubmission = (values) => {
+        console.log(values)
+        tasksServices.update(task.id, values);
+    }
+
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -85,9 +91,7 @@ const Task = ({ task }) => {
                         <Formik 
                             initialValues={initialState}
                             validationSchema={validationSchema}
-                            onSubmit={ values => {
-                                console.log(values);
-                            }}
+                            onSubmit={ values => handleSubmission(values) }
                             >
                             <Form>
                                 <TableContainer 

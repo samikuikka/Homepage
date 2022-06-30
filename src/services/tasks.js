@@ -16,10 +16,20 @@ const getTasks = async () => {
     return request.data
 }
 
+const update = async (id, data) => {
+    const config = {
+        headers: { Authorization: token }
+    }
+    
+    const request = await axios.put(`${baseURL}/${id}`, data, config);
+    return request.data;
+}
+
 
 const tasksServices = {
     setToken,
     getTasks,
+    update,
 }
 
 export default tasksServices;
