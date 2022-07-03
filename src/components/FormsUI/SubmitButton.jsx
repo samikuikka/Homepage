@@ -1,8 +1,8 @@
 import React from 'react';
-import  IconButton  from '@mui/material/IconButton';
+import  Button  from '@mui/material/Button';
 import { useFormikContext } from 'formik';
 
-const IconButtonWrapper = ({
+const ButtonWrapper = ({
     children,
     close,
     ...otherProps
@@ -17,17 +17,19 @@ const IconButtonWrapper = ({
     }
 
     const config = {
-        color: 'primary',
-        onClick: handleSubmit
+        color: 'secondary',
+        onClick: handleSubmit,
+        fullWidth: true,
+        variant: 'contained'
     }
 
     return (
-        <IconButton
+        <Button
             {...config}
         >
             {children}
-        </IconButton>
+        </Button>
     );
 }
 
-export default IconButtonWrapper;
+export default ButtonWrapper;

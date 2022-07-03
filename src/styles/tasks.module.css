@@ -29,4 +29,13 @@
     flex: 1;
 }
 
+#add_container {
+    width: 100%;
+}
+
+#add_button {
+    padding: 15px;
+    border: 1px dashed rgba(0,0,0, 0.3)
+}
+
 

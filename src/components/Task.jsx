@@ -3,7 +3,9 @@ import styles from '../styles/tasks.module.css';
 import { styled } from '@mui/material/styles';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
 import tasksServices from '../services/tasks'
+import { setNotification } from '../reducers/notificationReducer';
 
 
 import Grid from '@mui/material/Grid';
@@ -41,18 +43,32 @@ const validationSchema = yup.object({
 
 
 const Task = ({ task }) => {
+    const dispatch = useDispatch();
     const [expanded, setExpanded] = useState(false);
-    
+    const [data, setData] = useState(task);
+   
     const initialState = {
         name: task.name,
         duration: task.duration,
         done: task.done,
         hiPriority: task.hiPriority
-    };
+    }
+
+    
 
     const handleSubmission = (values) => {
-        console.log(values)
-        tasksServices.update(task.id, values);
+        try {
+            tasksServices.update(task.id, values);
+            setData({...data, ...values})
+            dispatch(setNotification({ severity: 'success', message: 'Task updated'}));
+        } catch (error) {
+            let errorMessage = {
+                severity: 'error',
+                message: error.message
+            }
+            dispatch(setNotification(errorMessage));
+        }
+        
     }
 
 
@@ -103,15 +119,16 @@ const Task = ({ task }) => {
                                     <Table sx={{ minWidth: 650 }} aria-label="task table">
                                         <TableHead>
                                             <TableRow>
-                                                <TableCell width="19%">name</TableCell>
-                                                <TableCell width="19%">project</TableCell>
-                                                <TableCell width="19%">done</TableCell>
-                                                <TableCell width="19">high priority</TableCell>
-                                                <TableCell width="19%">duration</TableCell>
+                                                <TableCell width="15%">name</TableCell>
+                                                <TableCell width="15%">project</TableCell>
+                                                <TableCell width="15%">done</TableCell>
+                                                <TableCell width="15">high priority</TableCell>
+                                                <TableCell width="15%">duration</TableCell>
+                                                <TableCell width="15%">due date</TableCell>
                                                 <TableCell width="5%"></TableCell>
                                             </TableRow>
                                         </TableHead>
-                                        <TableEditBody task={task}/>
+                                        <TableEditBody task={data}/>
                                     </Table>
 
                                 </TableContainer>

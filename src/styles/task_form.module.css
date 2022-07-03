@@ -1,0 +1,10 @@
+
+#form_container {
+    width: 360px;
+    height: autox;
+    padding: 50px 35px;
+}
+
+.input_field {
+    display: block;
+}

@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Routes, Route
 } from "react-router-dom"
-
+import projectServices from './services/projects';
+import { setNotes } from './reducers/projectReducer';
+import { useDispatch } from 'react-redux';
 
 import About from './routes/About';
 import Home from './routes/Home';
@@ -22,6 +24,15 @@ import Box from '@mui/material/Box';
 
 
 function App() {
+  const dispatch = useDispatch();
+
+  //Initialize projects
+  useEffect( () => {
+    projectServices.initializeNotes().then( notes => {
+      dispatch(setNotes(notes));
+    }
+    )
+  })
 
   return (
     <ThemeProvider theme={theme}>

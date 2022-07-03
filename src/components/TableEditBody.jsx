@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
@@ -23,7 +22,7 @@ const TableEditBody = ({task}) => {
         setEdit(false);
     }
 
-
+    console.log(task)
     return (
         <TableBody>
             <TableRow>
@@ -45,6 +44,7 @@ const TableEditBody = ({task}) => {
                     >
                         {task.duration}
                     </EditCell>
+                    <TableCell>DATE HERE</TableCell>
                     <TableCell>
                         {edit ? (
                             <SubmitIconButton close={closeEdit}>
