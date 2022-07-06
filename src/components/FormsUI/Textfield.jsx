@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 
 const Textfield = ({name, ...otherProps}) => {
     const [field, meta] = useField(name);
-
+   
     const config = {
         ...field,
         ...otherProps,
@@ -14,7 +14,9 @@ const Textfield = ({name, ...otherProps}) => {
     return (
         <TextField
             {...config}
-            sx={{ display: 'block'}}        
+            sx={{ display: 'block'}}
+            error={Boolean(meta.error)}
+            helperText={meta.error ? meta.error : ' '}
         >
 
         </TextField>

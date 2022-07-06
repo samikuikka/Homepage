@@ -7,4 +7,15 @@
 
 .input_field {
     display: block;
+    padding-bottom: 15px;
+}
+
+.textfield_input {
+    display: block;
+    padding-bottom: 5px;
+}
+
+.date_picker {
+    display: block;
+    width: 100%;
 }
