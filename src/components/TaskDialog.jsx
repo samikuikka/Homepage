@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import styles from '../styles/task_form.module.css'
 import { Field } from 'formik';
 import { useSelector } from 'react-redux';
+import tasksServices from '../services/tasks';
 
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -88,7 +89,7 @@ const validationSchema = yup.object({
     dueDate: yup.date('must be date').min(today, 'date cannot be in the past')
 })
 
-const TaskDialog = ({open, handleClose}) => {
+const TaskDialog = ({open, handleClose, updateTasks}) => {
     const projects = useSelector(state => state.projects.projects);
 
     const initialValues = {
@@ -102,6 +103,9 @@ const TaskDialog = ({open, handleClose}) => {
 
     const handleSubmission = (values) => {
         console.log(values);
+        tasksServices.create(values.project, values);
+        updateTasks();
+        handleClose();
     };
     
    

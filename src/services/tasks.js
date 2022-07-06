@@ -25,11 +25,21 @@ const update = async (id, data) => {
     return request.data;
 }
 
+const create = async (id, data) => {
+    const config = {
+        headers: { Authorization: token }
+    };
+
+    const request = await axios.post(`${baseURL}/${id}`, data, config);
+    return request.data;
+}
+
 
 const tasksServices = {
     setToken,
     getTasks,
     update,
+    create,
 }
 
 export default tasksServices;

@@ -21,6 +21,12 @@ const Tasks = () => {
         setOpen(false);
     }
 
+    const updateTasks = () => {
+        tasksServices.getTasks().then( data => {
+            setTasks(data);
+        });
+    }
+
     //Get tasks
     useEffect( () => {
         tasksServices.getTasks().then( data => {
@@ -55,7 +61,7 @@ const Tasks = () => {
                         add
                     </Button>
                 </Grid>
-                <TaskDialog open={open} handleClose={handleClose}/>
+                <TaskDialog open={open} handleClose={handleClose} updateTasks={updateTasks}/>
                 
                 {tasks.map((task, index) => {
                     return(
