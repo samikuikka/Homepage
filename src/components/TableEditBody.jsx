@@ -9,11 +9,12 @@ import IconButton from '@mui/material/IconButton';
 import SubmitIconButton from './FormsUI/SubmitIconButton';
 import EditCell from './FormsUI/EditCell';
 import EditCheckBox from './FormsUI/EditCheckBox';
+import EditDatepicker from './FormsUI/EditDatepicker';
 
 
 const TableEditBody = ({task}) => {
     const [edit, setEdit] = useState(false);
-
+    const date = new Date(task.dueDate)
     const handleEdit = () => {
         setEdit(true);
     };
@@ -22,7 +23,7 @@ const TableEditBody = ({task}) => {
         setEdit(false);
     }
 
-    console.log(task)
+    
     return (
         <TableBody>
             <TableRow>
@@ -44,7 +45,12 @@ const TableEditBody = ({task}) => {
                     >
                         {task.duration}
                     </EditCell>
-                    <TableCell>DATE HERE</TableCell>
+                    <EditDatepicker
+                        edit={edit}
+                        name="dueDate"
+                    >
+                        {date.toLocaleDateString('en-GB')}
+                    </EditDatepicker>
                     <TableCell>
                         {edit ? (
                             <SubmitIconButton close={closeEdit}>

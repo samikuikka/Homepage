@@ -33,7 +33,7 @@ const Tasks = () => {
             setTasks(data)
         })
     }, [])
-    //console.log('tasks: ',tasks);
+
     return(
         <div>
             <Typography variant={"h5"} className={styles.header_text}>
@@ -65,7 +65,7 @@ const Tasks = () => {
                 
                 {tasks.map((task, index) => {
                     return(
-                        <Task key={index} task={task} />
+                        <Task key={index} task={task} updateTasks={updateTasks} />
                     )
                 })}
             </Grid>

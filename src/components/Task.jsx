@@ -22,7 +22,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableEditBody from './TableEditBody';
-
+import Checkbox  from '@mui/material/Checkbox';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 const ExpandMore = styled((props) => {
@@ -42,7 +44,7 @@ const validationSchema = yup.object({
 });
 
 
-const Task = ({ task }) => {
+const Task = ({ task, updateTasks}) => {
     const dispatch = useDispatch();
     const [expanded, setExpanded] = useState(false);
     const [data, setData] = useState(task);
@@ -51,12 +53,14 @@ const Task = ({ task }) => {
         name: task.name,
         duration: task.duration,
         done: task.done,
-        hiPriority: task.hiPriority
+        hiPriority: task.hiPriority,
+        dueDate: task.dueDate
     }
 
     
 
     const handleSubmission = (values) => {
+        console.log(values)
         try {
             tasksServices.update(task.id, values);
             setData({...data, ...values})
@@ -76,6 +80,13 @@ const Task = ({ task }) => {
         setExpanded(!expanded);
     };
 
+    const handleDelete = async (event) => {
+        if(event.target.checked) {
+            await tasksServices.remove(task.id);
+            updateTasks();
+        }
+    }
+
     
     return (
         <Grid
@@ -89,6 +100,11 @@ const Task = ({ task }) => {
                         <PlayCircleIcon color="primary" fontSize="large" />
                     </IconButton>
                     <Divider orientation="vertical" flexItem id={styles.divider}  />
+                    <Checkbox 
+                        icon={<DeleteOutlineIcon />}
+                        checkedIcon={<DeleteIcon />}
+                        onChange={handleDelete}
+                    />
                     <Typography variant="h6" id={styles.task_name}>
                         {task.name}
                     </Typography>

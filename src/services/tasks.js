@@ -29,8 +29,17 @@ const create = async (id, data) => {
     const config = {
         headers: { Authorization: token }
     };
-
+    console.log('data', data);
     const request = await axios.post(`${baseURL}/${id}`, data, config);
+    return request.data;
+}
+
+const remove = async (id) => {
+    const config = {
+        headers: { Authorization: token}
+    };
+
+    const request = await axios.delete(`${baseURL}/${id}`, config);
     return request.data;
 }
 
@@ -40,6 +49,7 @@ const tasksServices = {
     getTasks,
     update,
     create,
+    remove,
 }
 
 export default tasksServices;

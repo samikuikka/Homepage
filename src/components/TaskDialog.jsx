@@ -61,7 +61,7 @@ const CustomDatePicker = ({
     return (
         <DesktopDatePicker
             label="due date"
-            inputFormat="MM/dd/yyyy"
+            inputFormat="dd/MM/yyyy"
             value={field.value}
             onChange={(values) => form.setFieldValue(field.name, values)}
             sx={{ width: '100%'}}
@@ -101,9 +101,9 @@ const TaskDialog = ({open, handleClose, updateTasks}) => {
     };
 
 
-    const handleSubmission = (values) => {
+    const handleSubmission = async (values) => {
         console.log(values);
-        tasksServices.create(values.project, values);
+        await tasksServices.create(values.project, values);
         updateTasks();
         handleClose();
     };
