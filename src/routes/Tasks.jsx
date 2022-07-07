@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TaskDialog from '../components/TaskDialog';
+import TaskFilter from '../components/TaskFilter';
 
 const Tasks = () => {
 
@@ -36,9 +37,7 @@ const Tasks = () => {
 
     return(
         <div>
-            <Typography variant={"h5"} className={styles.header_text}>
-                Tasks
-            </Typography>
+            <TaskFilter />
 
             <Grid
                 container
