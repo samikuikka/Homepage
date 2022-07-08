@@ -24,6 +24,7 @@ import TableRow from '@mui/material/TableRow';
 import TableEditBody from './TableEditBody';
 import Checkbox  from '@mui/material/Checkbox';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import Timer from './Timer';
 
 
 const ExpandMore = styled((props) => {
@@ -94,9 +95,7 @@ const Task = ({ task, updateTasks}) => {
         >
             <Paper elevation={2} className={styles.content_container}>
                 <div className={styles.content_header}>
-                    <IconButton size="small" id={styles.timer_button}>
-                        <PlayCircleIcon color="primary" fontSize="large" />
-                    </IconButton>
+                    <Timer />
                     <Divider orientation="vertical" flexItem id={styles.divider}  />
                     <Checkbox 
                         icon={<DeleteOutlineIcon />}
