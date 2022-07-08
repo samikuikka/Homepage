@@ -24,7 +24,6 @@ import TableRow from '@mui/material/TableRow';
 import TableEditBody from './TableEditBody';
 import Checkbox  from '@mui/material/Checkbox';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 
 const ExpandMore = styled((props) => {
@@ -60,7 +59,6 @@ const Task = ({ task, updateTasks}) => {
     
 
     const handleSubmission = (values) => {
-        console.log(values)
         try {
             tasksServices.update(task.id, values);
             setData({...data, ...values})
@@ -102,8 +100,8 @@ const Task = ({ task, updateTasks}) => {
                     <Divider orientation="vertical" flexItem id={styles.divider}  />
                     <Checkbox 
                         icon={<DeleteOutlineIcon />}
-                        checkedIcon={<DeleteIcon />}
                         onChange={handleDelete}
+                        checked={false}
                     />
                     <Typography variant="h6" id={styles.task_name}>
                         {task.name}

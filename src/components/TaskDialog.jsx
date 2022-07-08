@@ -102,7 +102,6 @@ const TaskDialog = ({open, handleClose, updateTasks}) => {
 
 
     const handleSubmission = async (values) => {
-        console.log(values);
         await tasksServices.create(values.project, values);
         updateTasks();
         handleClose();

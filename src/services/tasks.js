@@ -8,11 +8,11 @@ const setToken = (newToken) => {
     token = `bearer ${newToken}`
 }
 
-const getTasks = async () => {
+const getTasks = async (filter) => {
     const config = {
         headers: { Authorization: token }
     }
-    const request = await axios.get(baseURL, config);
+    const request = await axios.get(`${baseURL}/${filter}`, config);
     return request.data
 }
 
@@ -20,7 +20,6 @@ const update = async (id, data) => {
     const config = {
         headers: { Authorization: token }
     }
-    
     const request = await axios.put(`${baseURL}/${id}`, data, config);
     return request.data;
 }
@@ -29,7 +28,6 @@ const create = async (id, data) => {
     const config = {
         headers: { Authorization: token }
     };
-    console.log('data', data);
     const request = await axios.post(`${baseURL}/${id}`, data, config);
     return request.data;
 }

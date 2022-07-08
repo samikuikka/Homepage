@@ -4,7 +4,6 @@ import styles from '../styles/tasks.module.css';
 import Task from '../components/Task';
 
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TaskDialog from '../components/TaskDialog';
 import TaskFilter from '../components/TaskFilter';
@@ -13,6 +12,7 @@ const Tasks = () => {
 
     const [tasks, setTasks] = useState([]);
     const [open, setOpen] = useState(false);
+    const [filter, setFilter] = useState('');
 
     const handleOpen = () => {
         setOpen(true);
@@ -23,21 +23,21 @@ const Tasks = () => {
     }
 
     const updateTasks = () => {
-        tasksServices.getTasks().then( data => {
+        tasksServices.getTasks(filter).then( data => {
             setTasks(data);
         });
     }
 
     //Get tasks
     useEffect( () => {
-        tasksServices.getTasks().then( data => {
+        tasksServices.getTasks(filter).then( data => {
             setTasks(data)
         })
-    }, [])
-
+    }, [filter]);
+    
     return(
         <div>
-            <TaskFilter />
+            <TaskFilter setFilter={setFilter}/>
 
             <Grid
                 container
@@ -64,7 +64,7 @@ const Tasks = () => {
                 
                 {tasks.map((task, index) => {
                     return(
-                        <Task key={index} task={task} updateTasks={updateTasks} />
+                        <Task key={task.id} task={task} updateTasks={updateTasks} />
                     )
                 })}
             </Grid>
