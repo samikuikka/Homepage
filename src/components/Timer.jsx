@@ -7,9 +7,9 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
 import Box from '@mui/material/Box';
 
-const Timer = () => {
-    const { timer, isPaused, handleStart, handlePause } = useTimer(0)
-
+const Timer = ({task}) => {
+    const { timer, isPaused, handleStart, handlePause } = useTimer(task)
+    
     return(
         <Box>
             {

@@ -24,6 +24,7 @@ import TableRow from '@mui/material/TableRow';
 import TableEditBody from './TableEditBody';
 import Checkbox  from '@mui/material/Checkbox';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import DoneIcon from '@mui/icons-material/Done';
 import Timer from './Timer';
 
 
@@ -82,6 +83,7 @@ const Task = ({ task, updateTasks}) => {
     const handleDelete = async (event) => {
         if(event.target.checked) {
             await tasksServices.remove(task.id);
+            localStorage.removeItem(task.id);
             updateTasks();
         }
     }
@@ -95,10 +97,10 @@ const Task = ({ task, updateTasks}) => {
         >
             <Paper elevation={2} className={styles.content_container}>
                 <div className={styles.content_header}>
-                    <Timer />
+                    <Timer task={task.id}/>
                     <Divider orientation="vertical" flexItem id={styles.divider}  />
                     <Checkbox 
-                        icon={<DeleteOutlineIcon />}
+                        icon={<DoneIcon color="secondary"/>}
                         onChange={handleDelete}
                         checked={false}
                     />

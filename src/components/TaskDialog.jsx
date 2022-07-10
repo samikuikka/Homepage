@@ -3,8 +3,11 @@ import { Formik, Form, useFormikContext, useField } from 'formik';
 import * as yup from 'yup';
 import styles from '../styles/task_form.module.css'
 import { Field } from 'formik';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import tasksServices from '../services/tasks';
+import projectServices from '../services/projects';
+import { setNotes } from '../reducers/projectReducer';
+import { setNotification } from '../reducers/notificationReducer';
 
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -20,6 +23,7 @@ import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import FormHelperText from '@mui/material/FormHelperText';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import FormikAutocomplete from './FormsUI/FormikAutocomplete';
 
 const CustomCheckbox = ({
     field,
@@ -89,8 +93,10 @@ const validationSchema = yup.object({
     dueDate: yup.date('must be date').min(today, 'date cannot be in the past')
 })
 
+
 const TaskDialog = ({open, handleClose, updateTasks}) => {
     const projects = useSelector(state => state.projects.projects);
+    let dispatch = useDispatch();
 
     const initialValues = {
         name: '',
@@ -102,8 +108,17 @@ const TaskDialog = ({open, handleClose, updateTasks}) => {
 
 
     const handleSubmission = async (values) => {
-        await tasksServices.create(values.project, values);
+        const id = await projectServices.getID(values.project);
+        await tasksServices.create(id, values);
         updateTasks();
+
+        //Update project list
+        projectServices.initializeNotes().then(notes => {
+            dispatch(setNotes(notes));
+        })
+
+        //Send success message
+        dispatch(setNotification({ severity: 'success', message: 'task added'}))
         handleClose();
     };
     
@@ -147,17 +162,12 @@ const TaskDialog = ({open, handleClose, updateTasks}) => {
                         />
 
                         <Box className={styles.textfield_input} >
-                            <Field
+                            <Field 
                                 name="project"
-                                component={CustomSelect}
-                                sx={{ width: '100%'}}
-                            >
-                                {projects.map((project,id) => {
-                                    return (
-                                        <MenuItem value={project._id} key={id} divider >{project.name}</MenuItem>
-                                    )
-                                })}
-                            </Field>
+                                component={FormikAutocomplete}
+                                label="project"
+                                options={projects}
+                            />
                         </Box>
                         <Field 
                             name="dueDate"

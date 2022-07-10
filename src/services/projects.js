@@ -29,6 +29,28 @@ const create = async (data) => {
     return request.data;
 }
 
+/**
+ * Gives id of project
+ * @param {String} name - the name of project
+ * @returns {string} id of project
+ */
+const getID = async (name) => {
+    const config = utils.getConfig(token);
+    const request = await axios.get(baseURL, config);
+    const project = request.data.find(project => project.name === name)
+
+    if(project !== undefined) {
+        return project.id;
+    } else {
+        try {
+            const postRequest = await axios.post(baseURL, {name: name}, config);
+            return postRequest.data._id;
+        } catch(error) {
+            console.log(error);
+        }
+    }
+}
+
 const remove = async (id) => {
     const config = utils.getConfig(token);
 
@@ -44,6 +66,7 @@ const projectServices = {
     update,
     create,
     remove,
+    getID,
 }
 
 export default projectServices;
