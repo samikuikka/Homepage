@@ -36,26 +36,6 @@ const CustomCheckbox = ({
     )
 }
 
-const CustomSelect = ({
-    field,
-    form,
-    ...props
-}) => {
-    
-    return (
-        <React.Fragment>
-            <Select  
-                error={Boolean(form.errors.project)}
-                {...props} 
-                {...field}
-            />
-            <FormHelperText error={Boolean(form.errors.project)}>
-                {form.errors.project ? form.errors.project : ' '}
-            </FormHelperText>
-        </React.Fragment>
-    );
-}
-
 const CustomDatePicker = ({
     field,
     form,
@@ -108,18 +88,23 @@ const TaskDialog = ({open, handleClose, updateTasks}) => {
 
 
     const handleSubmission = async (values) => {
-        const id = await projectServices.getID(values.project);
-        await tasksServices.create(id, values);
-        updateTasks();
-
-        //Update project list
-        projectServices.initializeNotes().then(notes => {
-            dispatch(setNotes(notes));
-        })
-
-        //Send success message
-        dispatch(setNotification({ severity: 'success', message: 'task added'}))
-        handleClose();
+        console.log(values);
+        try {
+            const id = await projectServices.getID(values.project);
+            await tasksServices.create(id, values);
+            updateTasks();
+            //Update project list
+            projectServices.initializeNotes().then(notes => {
+                dispatch(setNotes(notes));
+            })
+            updateTasks();
+            //Send success message
+            dispatch(setNotification({ severity: 'success', message: 'task added'}))
+            handleClose();
+        } catch (error) {
+            console.log(error);
+            dispatch(setNotification({severity: 'error', message: 'error while adding task'}))
+        }
     };
     
    

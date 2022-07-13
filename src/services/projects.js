@@ -38,9 +38,9 @@ const getID = async (name) => {
     const config = utils.getConfig(token);
     const request = await axios.get(baseURL, config);
     const project = request.data.find(project => project.name === name)
-
+    
     if(project !== undefined) {
-        return project.id;
+        return project._id;
     } else {
         try {
             const postRequest = await axios.post(baseURL, {name: name}, config);
